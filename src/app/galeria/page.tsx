@@ -1,15 +1,21 @@
+import * as React from "react";
 import Link from "next/link";
 import { AppShell } from "@/src/components/layout/app-shell";
+import { SkeletonCard, SkeletonTable } from "@/src/components/ui";
 import { DesignSystemOverview } from "@/src/components/ui/design-system-overview";
 import { ShowcaseDemo } from "@/src/components/ui/showcase-demo";
+import { requireUser } from "@/src/lib/auth/current-user";
 
-// Galería interna completa de componentes, tipografía, skeletons, notificaciones y paginación (0.8)
-export default function GaleriaPage() {
+async function AuthenticatedGaleria() {
+  const user = await requireUser("/galeria");
+
   return (
     <AppShell
       title="Galería de Componentes"
       subtitle="Referencia viva de UI, skeletons, notificaciones Sonner, paginación y formatos"
-      badgeText="Subfase 0.8"
+      badgeText="Fase 0"
+      userName={user.name}
+      userRole={user.role === "ADMIN" ? "admin" : "trabajador"}
       headerActions={
         <Link
           href="/"
@@ -22,5 +28,21 @@ export default function GaleriaPage() {
       <DesignSystemOverview />
       <ShowcaseDemo />
     </AppShell>
+  );
+}
+
+// Galería interna protegida de componentes, tipografía, skeletons y paginación
+export default function GaleriaPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="ps-canvas min-h-screen w-full space-y-4 p-4 sm:p-6">
+          <SkeletonCard />
+          <SkeletonTable rows={3} columns={4} />
+        </div>
+      }
+    >
+      <AuthenticatedGaleria />
+    </React.Suspense>
   );
 }

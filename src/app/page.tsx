@@ -1,77 +1,89 @@
+import * as React from "react";
 import Link from "next/link";
 import { AppShell } from "@/src/components/layout/app-shell";
-import { Card } from "@/src/components/ui";
-import { DesignSystemOverview } from "@/src/components/ui/design-system-overview";
-import { ShowcaseDemo } from "@/src/components/ui/showcase-demo";
+import {
+  Badge,
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  SkeletonCard,
+  SkeletonStat,
+} from "@/src/components/ui";
+import { requireUser } from "@/src/lib/auth/current-user";
 
-const KPIS = [
-  {
-    label: "Vendido en el mes",
-    value: "$ 1.650,00",
-    sub: "66.000,00 Bs. · 14 notas",
-    elevated: true,
-    accent: "text-[var(--ps-green-700)]",
-  },
-  {
-    label: "Total cobrado",
-    value: "$ 1.240,00",
-    sub: "Efectivo $780,00 · Bs. 18.400,00",
-    elevated: false,
-    accent: "text-[var(--ps-teal-700)]",
-  },
-  {
-    label: "Por cobrar",
-    value: "$ 410,00",
-    sub: "4 notas activas a crédito",
-    elevated: false,
-    accent: "text-[var(--ps-text)]",
-  },
-  {
-    label: "Deuda vencida",
-    value: "$ 50,00",
-    sub: "1 nota vencida · requiere gestión",
-    elevated: false,
-    accent: "text-[var(--ps-danger-text)]",
-  },
-];
+async function AuthenticatedHome() {
+  const user = await requireUser("/");
+  const roleLabel = user.role === "ADMIN" ? "Administrador" : "Trabajador";
 
-export default function Home() {
   return (
     <AppShell
-      title="Sistema de Diseño y Layout"
-      subtitle="Ancho completo fluido · Capas de vidrio y elevación · Poppins"
-      badgeText="Fase 0 completa"
-      showSearchPlaceholder
+      title="Panel Principal"
+      subtitle={`Sesión activa: ${user.name} · ${roleLabel}`}
+      userName={user.name}
+      userRole={user.role === "ADMIN" ? "admin" : "trabajador"}
       headerActions={
         <Link
           href="/galeria"
-          className="ps-pressable inline-flex min-h-10 items-center justify-center rounded-full bg-[var(--ps-green-700)] px-4 text-xs font-semibold text-white shadow-sm hover:bg-[var(--ps-green-800)] sm:text-sm"
+          className="ps-pressable inline-flex min-h-10 items-center justify-center rounded-full border border-[var(--ps-border)] bg-white px-4 text-xs font-semibold text-[var(--ps-text)] shadow-xs hover:bg-[var(--ps-surface-subtle)] sm:text-sm"
         >
-          Ver galería
+          Componentes
         </Link>
       }
     >
-      {/* Grilla de KPIs ocupando todo el ancho disponible */}
-      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {KPIS.map((kpi) => (
-          <Card
-            key={kpi.label}
-            layer={kpi.elevated ? 2 : 1}
-            interactive
-            padding="md"
-            className="rounded-[var(--ps-radius-lg)]"
-          >
-            <p className="text-xs font-medium text-[var(--ps-text-secondary)]">{kpi.label}</p>
-            <p className={`mt-1.5 text-2xl font-bold tracking-tight ps-tabular sm:text-3xl ${kpi.accent}`}>
-              {kpi.value}
-            </p>
-            <p className="mt-2 text-xs text-[var(--ps-text-secondary)] ps-tabular">{kpi.sub}</p>
-          </Card>
-        ))}
-      </section>
+      <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+        <Card layer={2} padding="lg" className="lg:col-span-8">
+          <CardHeader>
+            <div className="flex flex-wrap items-center gap-2">
+              <CardTitle>Bienvenido, {user.name}</CardTitle>
+              <Badge variant={user.role === "ADMIN" ? "success" : "info"}>
+                {roleLabel}
+              </Badge>
+            </div>
+            <CardDescription>
+              Sistema operativo privado de ProSalud Servicios Integrales, C.A.
+              A medida que avancemos en las siguientes fases verás aquí la tasa BCV real,
+              cotizaciones, notas de entrega y alertas de cobro.
+            </CardDescription>
+          </CardHeader>
+        </Card>
 
-      <DesignSystemOverview />
-      <ShowcaseDemo />
+        <Card layer={1} padding="lg" className="lg:col-span-4">
+          <CardHeader>
+            <CardTitle>Acceso y seguridad</CardTitle>
+            <CardDescription>
+              Tu sesión está protegida con cookie HttpOnly firmada y verificación de usuario activo en servidor.
+            </CardDescription>
+          </CardHeader>
+          <p className="mt-3 text-xs text-[var(--ps-text-secondary)]">
+            Correo: <span className="font-medium text-[var(--ps-text)]">{user.email}</span>
+          </p>
+        </Card>
+      </section>
     </AppShell>
+  );
+}
+
+function HomeSkeleton() {
+  return (
+    <div className="ps-canvas min-h-screen w-full p-4 sm:p-6">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+        <div className="lg:col-span-8">
+          <SkeletonStat />
+        </div>
+        <div className="lg:col-span-4">
+          <SkeletonCard />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Panel principal autenticado (sin sesión redirige a /login)
+export default function Home() {
+  return (
+    <React.Suspense fallback={<HomeSkeleton />}>
+      <AuthenticatedHome />
+    </React.Suspense>
   );
 }

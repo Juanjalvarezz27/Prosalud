@@ -3,10 +3,11 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, Search, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { LogOut, Menu, Search, X } from "lucide-react";
 import { APP_NAV_ITEMS } from "@/src/config/navigation";
 import { cn } from "@/src/lib/cn";
+import { notify } from "@/src/lib/notify";
 
 export interface AppShellProps {
   title: string;
@@ -16,6 +17,7 @@ export interface AppShellProps {
   showSearchPlaceholder?: boolean;
   bcvRateLabel?: string;
   bcvDateLabel?: string;
+  userName?: string;
   userRole?: "admin" | "trabajador";
   children: React.ReactNode;
 }
@@ -34,11 +36,30 @@ export function AppShell({
   showSearchPlaceholder = false,
   bcvRateLabel = "40,00 Bs/$",
   bcvDateLabel = "27/11/2026",
+  userName,
   userRole = "admin",
   children,
 }: AppShellProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const [loggingOut, setLoggingOut] = React.useState(false);
+
+  async function handleLogout() {
+    if (loggingOut) return;
+    setLoggingOut(true);
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      notify.success("Sesión cerrada");
+      setMenuOpen(false);
+      router.replace("/login");
+      router.refresh();
+    } catch {
+      notify.error("No pudimos cerrar sesión. Intenta de nuevo.");
+    } finally {
+      setLoggingOut(false);
+    }
+  }
 
   const visibleItems = React.useMemo(
     () => APP_NAV_ITEMS.filter((item) => !item.adminOnly || userRole === "admin"),
@@ -58,31 +79,32 @@ export function AppShell({
     <div className="ps-canvas min-h-screen w-full overflow-x-hidden pb-6">
       <div className="flex min-h-screen w-full gap-5 p-3 sm:p-5">
         {/* Barra lateral flotante en escritorio (Capa 3 · Vidrio esmerilado) */}
-        <aside className="ps-layer-3 sticky top-5 hidden h-[calc(100vh-2.5rem)] w-64 shrink-0 flex-col justify-between rounded-[var(--ps-radius-xl)] p-4 lg:flex">
-          <div className="space-y-5 overflow-y-auto pr-0.5">
+        <aside className="ps-layer-3 sticky top-5 hidden h-[calc(100vh-2.5rem)] w-64 shrink-0 flex-col justify-between gap-3 rounded-[var(--ps-radius-xl)] p-3.5 lg:flex">
+          <div className="min-h-0 flex-1 space-y-3 overflow-y-auto pr-0.5">
             <Link
               href="/"
-              className="ps-pressable flex items-center gap-3 rounded-[var(--ps-radius-md)] border border-white bg-white/85 p-2.5 shadow-xs"
+              className="ps-pressable flex items-center justify-center rounded-[var(--ps-radius-md)] border border-white bg-white/90 px-3 py-2.5 shadow-xs"
             >
               <Image
                 src="/logo.png"
-                alt="Logo ProSalud Servicios Integrales"
-                width={1200}
-                height={896}
+                alt="ProSalud Servicios Integrales"
+                width={634}
+                height={184}
                 priority
                 className="h-10 w-auto object-contain"
               />
-              <div className="min-w-0">
-                <p className="truncate text-sm font-bold tracking-tight text-[var(--ps-text)]">
-                  ProSalud
-                </p>
-                <p className="truncate text-[11px] font-medium text-[var(--ps-text-secondary)]">
-                  Servicios Integrales
-                </p>
-              </div>
             </Link>
 
-            <nav aria-label="Navegación principal" className="space-y-1">
+            <div className="rounded-[var(--ps-radius-md)] border border-[var(--ps-border)] bg-white/75 px-3 py-2">
+              <p className="truncate text-xs font-semibold text-[var(--ps-text)]">
+                {userName ?? "Usuario"}
+              </p>
+              <p className="text-[11px] text-[var(--ps-text-secondary)]">
+                {userRole === "admin" ? "Administrador" : "Trabajador"}
+              </p>
+            </div>
+
+            <nav aria-label="Navegación principal" className="space-y-0.5">
               {visibleItems.map((item) => {
                 const active = isRouteActive(pathname, item.href);
                 const Icon = item.icon;
@@ -92,7 +114,7 @@ export function AppShell({
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "ps-pressable flex items-center justify-between rounded-[var(--ps-radius-sm)] px-3.5 py-2.5 text-sm transition",
+                      "ps-pressable flex items-center justify-between rounded-[var(--ps-radius-sm)] px-3 py-2 text-sm transition",
                       active
                         ? "bg-[var(--ps-teal-700)] font-semibold text-white shadow-sm"
                         : "font-medium text-[var(--ps-text-secondary)] hover:bg-white/80 hover:text-[var(--ps-text)]"
@@ -111,22 +133,34 @@ export function AppShell({
             </nav>
           </div>
 
-          {/* Indicador permanente de Tasa BCV en escritorio */}
-          <div className="ps-layer-2 rounded-[var(--ps-radius-lg)] p-3.5">
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--ps-text-secondary)]">
-                Tasa BCV
-              </span>
-              <span className="rounded-full bg-[var(--ps-green-soft)] px-2 py-0.5 text-[10px] font-semibold text-[var(--ps-green-800)]">
-                Vigente
-              </span>
+          {/* Indicador permanente de Tasa BCV + sesión en escritorio */}
+          <div className="shrink-0 space-y-2">
+            <div className="ps-layer-2 rounded-[var(--ps-radius-lg)] p-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--ps-text-secondary)]">
+                  Tasa BCV
+                </span>
+                <span className="rounded-full bg-[var(--ps-green-soft)] px-2 py-0.5 text-[10px] font-semibold text-[var(--ps-green-800)]">
+                  Vigente
+                </span>
+              </div>
+              <p className="mt-1 text-xl font-bold tracking-tight text-[var(--ps-text)] ps-tabular">
+                {bcvRateLabel}
+              </p>
+              <p className="text-[11px] text-[var(--ps-text-secondary)]">
+                Fecha valor: {bcvDateLabel}
+              </p>
             </div>
-            <p className="mt-1 text-xl font-bold tracking-tight text-[var(--ps-text)] ps-tabular">
-              {bcvRateLabel}
-            </p>
-            <p className="text-[11px] text-[var(--ps-text-secondary)]">
-              Fecha valor: {bcvDateLabel}
-            </p>
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              disabled={loggingOut}
+              className="ps-pressable flex min-h-10 w-full cursor-pointer items-center justify-between rounded-[var(--ps-radius-md)] border border-[var(--ps-border)] bg-white/80 px-3.5 py-2 text-xs font-semibold text-[var(--ps-text-secondary)] hover:bg-[var(--ps-danger-bg)] hover:text-[var(--ps-danger-text)] disabled:opacity-60"
+            >
+              <span>{loggingOut ? "Saliendo…" : "Cerrar sesión"}</span>
+              <LogOut className="h-4 w-4 shrink-0" aria-hidden="true" />
+            </button>
           </div>
         </aside>
 
@@ -152,8 +186,8 @@ export function AppShell({
                 <Image
                   src="/logo.png"
                   alt="Logo ProSalud"
-                  width={1200}
-                  height={896}
+                  width={634}
+                  height={184}
                   priority
                   className="h-full w-auto object-contain"
                 />
@@ -192,7 +226,14 @@ export function AppShell({
             </div>
           </header>
 
-          <main className="flex min-w-0 flex-1 flex-col gap-5">{children}</main>
+          <main className="flex min-w-0 flex-1 flex-col">
+            <div
+              key={pathname}
+              className="ps-route-enter flex min-w-0 flex-1 flex-col gap-5"
+            >
+              {children}
+            </div>
+          </main>
         </div>
       </div>
 
@@ -214,22 +255,16 @@ export function AppShell({
                 <Link
                   href="/"
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2.5"
+                  className="flex items-center"
                 >
-                  <div className="flex h-10 w-12 shrink-0 items-center justify-center rounded-[var(--ps-radius-sm)] border border-[var(--ps-border)] bg-white p-1">
+                  <div className="flex h-10 items-center justify-center rounded-[var(--ps-radius-sm)] border border-[var(--ps-border)] bg-white px-2.5 py-1">
                     <Image
                       src="/logo.png"
-                      alt="Logo ProSalud"
-                      width={1200}
-                      height={896}
+                      alt="ProSalud Servicios Integrales"
+                      width={634}
+                      height={184}
                       className="h-full w-auto object-contain"
                     />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-[var(--ps-text)]">ProSalud</p>
-                    <p className="text-[11px] text-[var(--ps-text-secondary)]">
-                      Servicios Integrales
-                    </p>
                   </div>
                 </Link>
                 <button
@@ -272,21 +307,35 @@ export function AppShell({
               </nav>
             </div>
 
-            <div className="ps-layer-2 rounded-[var(--ps-radius-lg)] p-3.5">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--ps-text-secondary)]">
-                  Tasa BCV
-                </span>
-                <span className="rounded-full bg-[var(--ps-green-soft)] px-2 py-0.5 text-[10px] font-semibold text-[var(--ps-green-800)]">
-                  Vigente
-                </span>
+            <div className="space-y-2.5">
+              <div className="ps-layer-2 rounded-[var(--ps-radius-lg)] p-3.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--ps-text-secondary)]">
+                    Tasa BCV
+                  </span>
+                  <span className="rounded-full bg-[var(--ps-green-soft)] px-2 py-0.5 text-[10px] font-semibold text-[var(--ps-green-800)]">
+                    Vigente
+                  </span>
+                </div>
+                <p className="mt-1 text-lg font-bold text-[var(--ps-text)] ps-tabular">
+                  {bcvRateLabel}
+                </p>
+                <p className="text-[11px] text-[var(--ps-text-secondary)]">
+                  Fecha valor: {bcvDateLabel}
+                </p>
               </div>
-              <p className="mt-1 text-lg font-bold text-[var(--ps-text)] ps-tabular">
-                {bcvRateLabel}
-              </p>
-              <p className="text-[11px] text-[var(--ps-text-secondary)]">
-                Fecha valor: {bcvDateLabel}
-              </p>
+
+              <button
+                type="button"
+                onClick={handleLogout}
+                disabled={loggingOut}
+                className="ps-pressable flex min-h-11 w-full cursor-pointer items-center justify-between rounded-[var(--ps-radius-md)] border border-[var(--ps-border)] bg-[var(--ps-surface-subtle)] px-3.5 py-2 text-left text-sm font-medium text-[var(--ps-text)] hover:bg-[var(--ps-danger-bg)] hover:text-[var(--ps-danger-text)] disabled:opacity-60"
+              >
+                <span className="truncate">
+                  {loggingOut ? "Saliendo…" : `Cerrar sesión (${userName ?? "Usuario"})`}
+                </span>
+                <LogOut className="h-4 w-4 shrink-0" aria-hidden="true" />
+              </button>
             </div>
           </div>
         </div>
