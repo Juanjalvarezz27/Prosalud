@@ -44,7 +44,7 @@ Registro vivo de decisiones técnicas, supuestos (`S1`–`S17`) y avance por fas
 
 ## 3. Estado actual de avance
 
-- **Fase actual:** Fase 1 — Autenticación, usuarios y roles (subfases `1.1`–`1.4` completadas; siguiente: `1.5`).
+- **Fase actual:** Fase 1 — Autenticación, usuarios y roles (subfases `1.1`–`1.5` completadas; siguiente: `1.6`).
 - **Avance verificado:**
   - Proyecto Next.js (`16.4.6`), TypeScript y Tailwind v4 base arrancan (`next dev`) y compilan (`next build`) sin errores.
   - Prisma `7.10.1` configurado (`prisma7.config.ts`, `prisma/schema.prisma`, `src/lib/prisma.ts`) y conectado contra PostgreSQL `18.7` en Neon; prueba de lectura/escritura/limpieza verificada (`leftover: null`).

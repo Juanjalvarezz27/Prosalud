@@ -7,6 +7,11 @@ import {
   type SessionRole,
   verifySessionToken,
 } from "./session";
+import {
+  getPermissionDeniedMessage,
+  hasPermission,
+  type Permission,
+} from "./permissions";
 
 export interface CurrentUser {
   id: string;
@@ -77,4 +82,45 @@ export async function requireApiUser(): Promise<
     };
   }
   return { user };
+}
+
+// Exige sesión y permiso específico R12 en Route Handlers (/api/*), devolviendo 403 si falla
+export async function requireApiPermission(
+  permission: Permission
+): Promise<
+  | { user: CurrentUser; errorResponse?: never }
+  | { user?: never; errorResponse: NextResponse }
+> {
+  const auth = await requireApiUser();
+  if (auth.errorResponse) {
+    return auth;
+  }
+
+  if (!hasPermission(auth.user.role, permission)) {
+    return {
+      errorResponse: NextResponse.json(
+        {
+          error: getPermissionDeniedMessage(permission),
+          code: "FORBIDDEN",
+        },
+        { status: 403 }
+      ),
+    };
+  }
+
+  return { user: auth.user };
+}
+
+// Verifica sesión y permiso en Server Components sin lanzar redirect; permite mostrar rechazo claro
+export async function checkPagePermission(
+  currentPath: string,
+  permission: Permission
+): Promise<{ user: CurrentUser; allowed: boolean; deniedMessage: string }> {
+  const user = await requireUser(currentPath);
+  const allowed = hasPermission(user.role, permission);
+  return {
+    user,
+    allowed,
+    deniedMessage: getPermissionDeniedMessage(permission),
+  };
 }

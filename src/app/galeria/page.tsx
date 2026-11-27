@@ -4,10 +4,11 @@ import { AppShell } from "@/src/components/layout/app-shell";
 import { SkeletonCard, SkeletonTable } from "@/src/components/ui";
 import { DesignSystemOverview } from "@/src/components/ui/design-system-overview";
 import { ShowcaseDemo } from "@/src/components/ui/showcase-demo";
-import { requireUser } from "@/src/lib/auth/current-user";
+import { AccessDenied } from "@/src/components/auth/access-denied";
+import { checkPagePermission } from "@/src/lib/auth/current-user";
 
 async function AuthenticatedGaleria() {
-  const user = await requireUser("/galeria");
+  const { user, allowed } = await checkPagePermission("/galeria", "users:manage");
 
   return (
     <AppShell
@@ -25,8 +26,14 @@ async function AuthenticatedGaleria() {
         </Link>
       }
     >
-      <DesignSystemOverview />
-      <ShowcaseDemo />
+      {!allowed ? (
+        <AccessDenied message="Solo el administrador puede acceder a la galería interna de componentes." />
+      ) : (
+        <>
+          <DesignSystemOverview />
+          <ShowcaseDemo />
+        </>
+      )}
     </AppShell>
   );
 }

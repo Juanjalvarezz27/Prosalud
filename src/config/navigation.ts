@@ -68,5 +68,6 @@ export const APP_NAV_ITEMS: NavItem[] = [
     label: "Componentes",
     href: "/galeria",
     icon: Palette,
+    adminOnly: true,
   },
 ];
