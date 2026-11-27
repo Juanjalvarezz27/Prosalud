@@ -12,6 +12,7 @@ Registro vivo de decisiones técnicas, supuestos (`S1`–`S17`) y avance por fas
 | **D2** | Numeración de documentos (R10) | Implementación lo más sencilla posible con series separadas (notas desde `00`). | Uso de secuencias nativas en PostgreSQL (`SEQUENCE`, `MINVALUE 0 START WITH 0` para notas) o contador mínimo por serie dentro de transacción. |
 | **D3** | Descuentos globales (R9 / R16) | Descuento global flexible y compatible con pagos por línea. | Al guardar un documento con descuento global (% o monto en `$` ref.), se prorratea proporcionalmente sobre las líneas (absorbiendo el residuo de centavo en la última) y se conserva el registro del descuento global. Así la suma de saldos de líneas siempre equivale al saldo de la nota. |
 | **D4** | ORM y PostgreSQL (Neon) | Prisma `7.10.1` + `@prisma/client@7.10.1` + `@prisma/adapter-pg@7.10.1`. | Se fijó `7.10.1` para evitar mezcla con `prisma@8.0.0-rc.x`. Configurado en `prisma7.config.ts` y cliente singleton en `src/lib/prisma.ts`. |
+| **D5** | Despliegue en Vercel al final | Todo el desarrollo (Fases 0–10) corre en local; el despliegue a Vercel pasa a `11.4`. | Se eliminó `0.3 Despliegue de prueba` de Fase 0 (verificando `next build` en local) y se movió el despliegue antes de cargar datos reales en Fase 11. |
 
 ---
 
@@ -46,11 +47,11 @@ Registro vivo de decisiones técnicas, supuestos (`S1`–`S17`) y avance por fas
   - Proyecto Next.js (`16.4.6`), TypeScript y Tailwind v4 base en funcionamiento.
   - Prisma `7.10.1` configurado (`prisma7.config.ts`, `prisma/schema.prisma`, `src/lib/prisma.ts`) y conectado contra PostgreSQL `18.7` en Neon (BD actualmente vacía).
 - **Insumos pendientes del cliente para fases futuras:**
-  - Logo oficial en PNG (para Fase 0.7 y Fase 8).
+  - Logo oficial en PNG (ya disponible en `public/logo.png` y `public/Logoredondo.png` para Fase 0.6 y Fase 8).
   - Archivo `Lista_de_Precios_Agosto_2026.xlsx` (para Fase 3.6–3.8).
   - Archivo Excel de clientes (para Fase 4.6).
 - **Progreso de fases:**
-  - [ ] Fase 0 — Fundamentos y sistema de diseño (`0.1`–`0.9`)
+  - [ ] Fase 0 — Fundamentos y sistema de diseño (`0.1`–`0.8`)
   - [ ] Fase 1 — Autenticación, usuarios y roles (`1.1`–`1.8`)
   - [ ] Fase 2 — Tasa BCV (`2.1`–`2.7`)
   - [ ] Fase 3 — Catálogo de productos (`3.1`–`3.9`)
@@ -61,4 +62,4 @@ Registro vivo de decisiones técnicas, supuestos (`S1`–`S17`) y avance por fas
   - [ ] Fase 8 — Documentos PDF y envío por WhatsApp (`8.1`–`8.7`)
   - [ ] Fase 9 — Estadísticas y alertas de cobro (`9.1`–`9.6`)
   - [ ] Fase 10 — Experiencia móvil, PWA y pulido (`10.1`–`10.8`)
-  - [ ] Fase 11 — Pruebas integrales, carga de datos reales y entrega (`11.1`–`11.7`)
+  - [ ] Fase 11 — Pruebas integrales, despliegue, datos reales y entrega (`11.1`–`11.8`)

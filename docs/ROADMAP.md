@@ -312,7 +312,7 @@ Principio clave: **los documentos históricos nunca cambian** aunque cambien los
 
 | Fase | Nombre | Subfases | Depende de |
 |---|---|---|---|
-| 0 | Fundamentos y sistema de diseño | 0.1 – 0.9 | — |
+| 0 | Fundamentos y sistema de diseño | 0.1 – 0.8 | — |
 | 1 | Autenticación, usuarios y roles | 1.1 – 1.8 | 0 |
 | 2 | Tasa BCV | 2.1 – 2.7 | 1 |
 | 3 | Catálogo de productos | 3.1 – 3.9 | 1 |
@@ -323,7 +323,7 @@ Principio clave: **los documentos históricos nunca cambian** aunque cambien los
 | 8 | Documentos PDF y envío por WhatsApp | 8.1 – 8.7 | 7 |
 | 9 | Estadísticas y alertas de cobro | 9.1 – 9.6 | 7 |
 | 10 | Experiencia móvil, PWA y pulido | 10.1 – 10.8 | 0–9 |
-| 11 | Pruebas integrales, carga de datos reales y entrega | 11.1 – 11.7 | 0–10 |
+| 11 | Pruebas integrales, despliegue, datos reales y entrega | 11.1 – 11.8 | 0–10 |
 
 Total: **12 fases y 92 subfases**.
 
@@ -337,46 +337,42 @@ Total: **12 fases y 92 subfases**.
 
 ### FASE 0 — Fundamentos y sistema de diseño
 
-**Objetivo:** proyecto base desplegable, conectado a su base de datos, con identidad visual, convenciones de interfaz y componentes listos para reutilizar.
+**Objetivo:** proyecto base compilable en local, conectado a su base de datos, con identidad visual, convenciones de interfaz y componentes listos para reutilizar (el despliegue en Vercel se realiza al final en la Fase 11).
 
 #### 0.1 Proyecto base y entornos
-- **Debe lograr:** proyecto **Next.js** con TypeScript y Tailwind que arranca en local; configuración separada para desarrollo y producción (variables de entorno); archivo de decisiones del proyecto creado.
-- **Listo cuando:** el proyecto arranca en local sin errores y existe el archivo de decisiones con los supuestos S1–S17 registrados.
+- **Debe lograr:** proyecto **Next.js** con TypeScript y Tailwind que arranca y compila en local (`next dev` y `next build`); archivo de decisiones del proyecto creado.
+- **Listo cuando:** el proyecto arranca y compila en local sin errores y existe el archivo de decisiones con los supuestos S1–S17 registrados.
 
 #### 0.2 Conexión a la base de datos
 - **Debe lograr:** conexión funcional a PostgreSQL en Neon mediante Prisma, en local.
 - **Listo cuando:** una operación de lectura/escritura de prueba funciona contra la base de datos y se elimina después.
 
-#### 0.3 Despliegue de prueba
-- **Debe lograr:** aplicación desplegada en Vercel con su conexión a la base de datos en producción.
-- **Listo cuando:** la URL de prueba abre y confirma conexión a la base de datos.
-
-#### 0.4 Identidad visual y tipografía
+#### 0.3 Identidad visual y tipografía
 - **Debe lograr:** paleta completa de ProSalud a partir de los colores del logo (ver 5.1 y Anexo B); **Poppins** cargada como fuente principal con sus pesos y jerarquía definida (sección 5.6); escala de espacios, radios, sombras y capas de profundidad.
 - **Listo cuando:** existe un conjunto de estilos reutilizables y la fuente se ve aplicada sin parpadeos al cargar.
 
-#### 0.5 Componentes base de interfaz
+#### 0.4 Componentes base de interfaz
 - **Debe lograr:** botones, campos, selectores, tarjetas, tablas con su versión móvil en tarjetas, insignias de estado, modales y hojas inferiores, diálogos de confirmación, estados vacíos.
 - **Listo cuando:** cada componente existe con sus variantes y estados (normal, foco, deshabilitado, error).
 
-#### 0.6 Sistema de carga (skeletons) y de notificaciones (Sonner)
+#### 0.5 Sistema de carga (skeletons) y de notificaciones (Sonner)
 - **Debe lograr:** biblioteca de **skeletons** reutilizables (texto, tarjeta, fila de tabla, formulario, gráfico, indicador) y sistema de **notificaciones con Sonner** con convención de mensajes en español (éxito, error, advertencia, información, proceso en curso).
 - **Listo cuando:** ambos sistemas se pueden usar desde cualquier pantalla y respetan las reglas de la sección 5.6.
 
-#### 0.7 Layout y navegación responsive
+#### 0.6 Layout y navegación responsive
 - **Debe lograr:** estructura general con logo; en escritorio, barra lateral; en móvil, navegación inferior; adaptable a todos los anchos.
 - **Listo cuando:** la navegación funciona y se ve bien en teléfono, tablet y escritorio.
 
-#### 0.8 Utilidades transversales y paginación base
+#### 0.7 Utilidades transversales y paginación base
 - **Debe lograr:** formato venezolano de números, dinero y fechas; manejo de dinero con **decimales exactos** y la regla de **redondeo R16**; utilidades de fechas con la **zona horaria R17**; **componente y convención de paginación real** (página, tamaño, total, orden estable, estado en la URL, límite máximo de tamaño de página).
 - **Listo cuando:** pruebas automatizadas de formato, redondeo (Anexo A.4) y aritmética monetaria pasan; la paginación base se puede enchufar a cualquier listado.
 
-#### 0.9 Galería de componentes y cierre
+#### 0.8 Galería de componentes y cierre
 - **Debe lograr:** una página interna que muestre todos los componentes, skeletons, notificaciones y estilos tipográficos.
 - **Listo cuando:** se cumplen los criterios de cierre.
 
 **Criterios de cierre de la Fase 0**
-- [ ] La aplicación está desplegada en una URL de prueba y conectada a la base de datos en local y en producción.
+- [ ] La aplicación arranca, compila (`next build`) y está conectada a la base de datos en local.
 - [ ] El layout se adapta a teléfono, tablet y escritorio.
 - [ ] La galería muestra todos los componentes, skeletons y notificaciones.
 - [ ] Los montos salen en formato `1.234,56` y las pruebas de redondeo del Anexo A.4 pasan.
@@ -833,9 +829,9 @@ Total: **12 fases y 92 subfases**.
 
 ---
 
-### FASE 11 — Pruebas integrales, carga de datos reales y entrega
+### FASE 11 — Pruebas integrales, despliegue, carga de datos reales y entrega
 
-**Objetivo:** validar todo el sistema con datos y escenarios reales y dejarlo listo para operar.
+**Objetivo:** validar todo el sistema, desplegarlo en Vercel con su entorno de producción, cargar los datos reales y dejarlo listo para operar.
 
 #### 11.1 Pruebas automatizadas de reglas críticas
 - **Debe lograr:** pruebas de dinero (R5–R9, R15, R16), fechas y vencimientos (R17, Anexo A.3), validaciones (R18), numeración concurrente y permisos; y verificación de los conjuntos de prueba del Anexo A.
@@ -849,25 +845,30 @@ Total: **12 fases y 92 subfases**.
 - **Debe lograr:** rutas y datos protegidos, sin datos sensibles expuestos, secretos fuera del código.
 - **Listo cuando:** la revisión no encuentra fallos.
 
-#### 11.4 Carga de datos reales en producción
+#### 11.4 Despliegue en Vercel y variables de producción
+- **Debe lograr:** aplicación desplegada en Vercel con variables de entorno de producción y conexión verificada contra PostgreSQL en Neon.
+- **Listo cuando:** la URL en producción abre, compila sin errores y confirma conexión a la base de datos.
+
+#### 11.5 Carga de datos reales en producción
 - **Debe lograr:** importar el catálogo (Excel de precios) y los clientes (Excel de clientes); crear los usuarios iniciales; configurar los datos de empresa.
 - **Listo cuando:** producción contiene los datos reales y se verifican por muestreo.
 
-#### 11.5 Verificación de persistencia
+#### 11.6 Verificación de persistencia
 - **Debe lograr:** comprobar que los datos persisten y se conservan correctamente tras reinicios y nuevos despliegues.
 - **Listo cuando:** no se pierde ningún dato.
 
-#### 11.6 Documentación
+#### 11.7 Documentación
 - **Debe lograr:** guía de uso breve para la dueña y los trabajadores (crear cotización, convertir, cobrar, enviar por WhatsApp, actualizar precios con Excel, qué hacer si la tasa falla) y documentación técnica del proyecto; lista de mejoras futuras (incluido el inventario).
 - **Listo cuando:** ambos documentos existen y cubren los flujos principales.
 
-#### 11.7 Entrega final
+#### 11.8 Entrega final
 - **Debe lograr:** sistema desplegado y operativo en su dirección final.
 - **Listo cuando:** se cumple la definición de "terminado" global.
 
 **Criterios de cierre de la Fase 11**
 - [ ] Los 7 flujos de extremo a extremo pasan.
 - [ ] Las pruebas automatizadas de dinero, numeración y permisos pasan, incluido R15.
+- [ ] La aplicación está desplegada en Vercel y conectada a la base de datos en producción.
 - [ ] Producción contiene los datos reales y los usuarios iniciales.
 - [ ] Ninguna acción restringida es posible para un trabajador.
 - [ ] La guía de uso existe.

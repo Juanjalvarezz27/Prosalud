@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProSalud — Roadmap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f7f8;
+      --card: #ffffff;
+      --border: #e2eaee;
+      --text: #132229;
+      --muted: #5f717a;
+      --green: #80b038;
+      --green-dark: #4f7719;
+      --green-soft: #eef6e3;
+      --teal-dark: #197482;
+      --teal-soft: #e6f5f7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Poppins", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 28px 20px 56px; }
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px 22px;
+      box-shadow: 0 8px 24px rgba(19, 34, 41, 0.05);
+      margin-bottom: 18px;
+    }
+    h1 { margin: 0; font-size: 1.25rem; font-weight: 700; }
+    .meta { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 14px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: #e7eef1;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .bar > div {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--teal-dark), var(--green));
+    }
+    .phase {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 15px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    .phase-left { display: flex; align-items: center; gap: 12px; }
+    .pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .pill.done { background: var(--green-soft); color: var(--green-dark); }
+    .pill.active { background: var(--teal-soft); color: var(--teal-dark); }
+    .pill.pending { background: #eef2f4; color: var(--muted); }
+    .phase-title { font-weight: 600; font-size: 0.98rem; }
+    .phase-obj { font-size: 0.8rem; color: var(--muted); }
+    .count { font-size: 0.82rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+    .subs {
+      margin: 0;
+      padding: 10px 18px 16px;
+      border-top: 1px solid var(--border);
+      background: #fafcfd;
+      list-style: none;
+    }
+    .sub {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 6px 0;
+      font-size: 0.88rem;
+    }
+    .mark { width: 18px; font-weight: 700; color: var(--muted); }
+    .sub-id { font-weight: 600; color: var(--teal-dark); min-width: 34px; }
+    .sub.done .mark { color: var(--green-dark); }
+    .sub.done .sub-title { text-decoration: line-through; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>ProSalud — Roadmap del Proyecto</h1>
+      <div class="meta">Vista de lectura · Actualizado el 27/11/2026, 9:05:56 a. m.</div>
+      <div class="stats">
+        <span>Fases: 0 / 12</span>
+        <span>Subfases: 0 / 92 (0%)</span>
+      </div>
+      <div class="bar"><div></div></div>
+    </section>
+    
+        <details class="phase" open>
+          <summary>
+            <div class="phase-left">
+              <span class="pill active">Fase 0 · Siguiente</span>
+              <div>
+                <div class="phase-title">Fundamentos y sistema de diseño</div>
+                <div class="phase-obj">proyecto base compilable en local, conectado a su base de datos, con identidad visual, convenciones de interfaz y componentes listos para reutilizar (el despliegue en Vercel se realiza al final en la Fase 11).</div>
+              </div>
+            </div>
+            <span class="count">0 / 8</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">0.1</span>
+              <span class="sub-title">Proyecto base y entornos</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">0.2</span>
+              <span class="sub-title">Conexión a la base de datos</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">0.3</span>
+              <span class="sub-title">Identidad visual y tipografía</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">0.4</span>
+              <span class="sub-title">Componentes base de interfaz</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">0.5</span>
+              <span class="sub-title">Sistema de carga (skeletons) y de notificaciones (Sonner)</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">0.6</span>
+              <span class="sub-title">Layout y navegación responsive</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">0.7</span>
+              <span class="sub-title">Utilidades transversales y paginación base</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">0.8</span>
+              <span class="sub-title">Galería de componentes y cierre</span>
+            </li></ul>
+        </details>
+
+        <details class="phase" >
+          <summary>
+            <div class="phase-left">
+              <span class="pill pending">Fase 1 · Pendiente</span>
+              <div>
+                <div class="phase-title">Autenticación, usuarios y roles</div>
+                <div class="phase-obj">acceso seguro al sistema con los dos roles definidos.</div>
+              </div>
+            </div>
+            <span class="count">0 / 8</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">1.1</span>
+              <span class="sub-title">Modelo de usuarios y primer administrador</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">1.2</span>
+              <span class="sub-title">Pantalla de inicio de sesión</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">1.3</span>
+              <span class="sub-title">Sesión y cierre de sesión</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">1.4</span>
+              <span class="sub-title">Protección de rutas</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">1.5</span>
+              <span class="sub-title">Autorización por rol</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">1.6</span>
+              <span class="sub-title">Listado de usuarios (admin)</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">1.7</span>
+              <span class="sub-title">Crear, editar y desactivar usuarios</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">1.8</span>
+              <span class="sub-title">Auditoría base</span>
+            </li></ul>
+        </details>
+
+        <details class="phase" >
+          <summary>
+            <div class="phase-left">
+              <span class="pill pending">Fase 2 · Pendiente</span>
+              <div>
+                <div class="phase-title">Tasa BCV</div>
+                <div class="phase-obj">disponer siempre de una tasa confiable, con respaldo y con historial.</div>
+              </div>
+            </div>
+            <span class="count">0 / 7</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">2.1</span>
+              <span class="sub-title">Almacenamiento e historial de tasas</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">2.2</span>
+              <span class="sub-title">Fuente principal automática</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">2.3</span>
+              <span class="sub-title">Fuente de respaldo y lógica de fallback</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">2.4</span>
+              <span class="sub-title">Actualización diaria y validaciones</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">2.5</span>
+              <span class="sub-title">Entrada manual (admin)</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">2.6</span>
+              <span class="sub-title">Indicador global de tasa y aviso de desactualización</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">2.7</span>
+              <span class="sub-title">Pantalla de historial de tasas</span>
+            </li></ul>
+        </details>
+
+        <details class="phase" >
+          <summary>
+            <div class="phase-left">
+              <span class="pill pending">Fase 3 · Pendiente</span>
+              <div>
+                <div class="phase-title">Catálogo de productos</div>
+                <div class="phase-obj">catálogo completo con dos precios por producto, mantenible por el admin y consultable por todos.</div>
+              </div>
+            </div>
+            <span class="count">0 / 9</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">3.1</span>
+              <span class="sub-title">Modelo de categorías y productos</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">3.2</span>
+              <span class="sub-title">Listado paginado con búsqueda y filtros</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">3.3</span>
+              <span class="sub-title">Detalle de producto</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">3.4</span>
+              <span class="sub-title">Gestión de categorías (admin)</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">3.5</span>
+              <span class="sub-title">Gestión de productos (admin)</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">3.6</span>
+              <span class="sub-title">Importación: carga y lectura del Excel</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">3.7</span>
+              <span class="sub-title">Importación: vista previa</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">3.8</span>
+              <span class="sub-title">Importación: aplicación y reporte final</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">3.9</span>
+              <span class="sub-title">Actualización masiva repetible</span>
+            </li></ul>
+        </details>
+
+        <details class="phase" >
+          <summary>
+            <div class="phase-left">
+              <span class="pill pending">Fase 4 · Pendiente</span>
+              <div>
+                <div class="phase-title">Clientes</div>
+                <div class="phase-obj">base de clientes completa, buscable y lista para cotizar y llevar crédito.</div>
+              </div>
+            </div>
+            <span class="count">0 / 6</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">4.1</span>
+              <span class="sub-title">Modelo de clientes</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">4.2</span>
+              <span class="sub-title">Listado paginado con búsqueda</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">4.3</span>
+              <span class="sub-title">Crear cliente con validaciones</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">4.4</span>
+              <span class="sub-title">Editar y desactivar (admin)</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">4.5</span>
+              <span class="sub-title">Ficha del cliente</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">4.6</span>
+              <span class="sub-title">Importación de clientes desde Excel</span>
+            </li></ul>
+        </details>
+
+        <details class="phase" >
+          <summary>
+            <div class="phase-left">
+              <span class="pill pending">Fase 5 · Pendiente</span>
+              <div>
+                <div class="phase-title">Cotizaciones</div>
+                <div class="phase-obj">que un vendedor arme una cotización completa desde el celular en pocos pasos.</div>
+              </div>
+            </div>
+            <span class="count">0 / 9</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">5.1</span>
+              <span class="sub-title">Modelo de cotización y numeración</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">5.2</span>
+              <span class="sub-title">Listado paginado de cotizaciones</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">5.3</span>
+              <span class="sub-title">Selección o alta de cliente</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">5.4</span>
+              <span class="sub-title">Agregar productos y cantidades</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">5.5</span>
+              <span class="sub-title">Totales dobles y tasa</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">5.6</span>
+              <span class="sub-title">Descuentos</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">5.7</span>
+              <span class="sub-title">Guardar, ver, editar y duplicar</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">5.8</span>
+              <span class="sub-title">Flujo móvil de la cotización</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">5.9</span>
+              <span class="sub-title">Expiración automática de cotizaciones</span>
+            </li></ul>
+        </details>
+
+        <details class="phase" >
+          <summary>
+            <div class="phase-left">
+              <span class="pill pending">Fase 6 · Pendiente</span>
+              <div>
+                <div class="phase-title">Notas de entrega</div>
+                <div class="phase-obj">convertir cotizaciones aceptadas (o crear ventas directas) en notas de entrega formales, numeradas y con valores congelados.</div>
+              </div>
+            </div>
+            <span class="count">0 / 6</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">6.1</span>
+              <span class="sub-title">Modelo de nota y numeración desde 00</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">6.2</span>
+              <span class="sub-title">Crear nota directa</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">6.3</span>
+              <span class="sub-title">Convertir cotización en nota</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">6.4</span>
+              <span class="sub-title">Aviso de cambio de tasa al convertir</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">6.5</span>
+              <span class="sub-title">Listado y detalle de notas</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">6.6</span>
+              <span class="sub-title">Anulación</span>
+            </li></ul>
+        </details>
+
+        <details class="phase" >
+          <summary>
+            <div class="phase-left">
+              <span class="pill pending">Fase 7 · Pendiente</span>
+              <div>
+                <div class="phase-title">Pagos, crédito y cuentas por cobrar</div>
+                <div class="phase-obj">registrar cómo y cuánto paga cada cliente y llevar con exactitud quién debe, cuánto y desde cuándo.</div>
+              </div>
+            </div>
+            <span class="count">0 / 10</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">7.1</span>
+              <span class="sub-title">Motor de cálculo de pagos (primero, con pruebas)</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">7.2</span>
+              <span class="sub-title">Modelo de pagos y medios de pago</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">7.3</span>
+              <span class="sub-title">Pantalla de pago — modo por productos</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">7.4</span>
+              <span class="sub-title">Pantalla de pago — modo por monto</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">7.5</span>
+              <span class="sub-title">Combinación de métodos y referencias</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">7.6</span>
+              <span class="sub-title">Pago al emitir, contado y crédito</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">7.7</span>
+              <span class="sub-title">Abonos posteriores y estado derivado</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">7.8</span>
+              <span class="sub-title">Historial de pagos y estado de cuenta por cliente</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">7.9</span>
+              <span class="sub-title">Panel de cuentas por cobrar</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">7.10</span>
+              <span class="sub-title">Robustez y cierre</span>
+            </li></ul>
+        </details>
+
+        <details class="phase" >
+          <summary>
+            <div class="phase-left">
+              <span class="pill pending">Fase 8 · Pendiente</span>
+              <div>
+                <div class="phase-title">Documentos PDF y envío por WhatsApp</div>
+                <div class="phase-obj">generar documentos formales con la identidad de ProSalud y compartirlos con el cliente en un clic.</div>
+              </div>
+            </div>
+            <span class="count">0 / 7</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">8.1</span>
+              <span class="sub-title">Configuración de empresa</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">8.2</span>
+              <span class="sub-title">PDF de la cotización</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">8.3</span>
+              <span class="sub-title">PDF de la nota de entrega</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">8.4</span>
+              <span class="sub-title">Estados del documento y descarga</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">8.5</span>
+              <span class="sub-title">Envío por WhatsApp en celular</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">8.6</span>
+              <span class="sub-title">Alternativa en escritorio y casos límite</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">8.7</span>
+              <span class="sub-title">Recordatorio de cobro</span>
+            </li></ul>
+        </details>
+
+        <details class="phase" >
+          <summary>
+            <div class="phase-left">
+              <span class="pill pending">Fase 9 · Pendiente</span>
+              <div>
+                <div class="phase-title">Estadísticas y alertas de cobro</div>
+                <div class="phase-obj">que la dueña vea de un vistazo cómo va el negocio y qué debe cobrar.</div>
+              </div>
+            </div>
+            <span class="count">0 / 6</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">9.1</span>
+              <span class="sub-title">Indicadores del mes</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">9.2</span>
+              <span class="sub-title">Ventas mensuales</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">9.3</span>
+              <span class="sub-title">Rankings</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">9.4</span>
+              <span class="sub-title">Cobros y cuentas por cobrar</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">9.5</span>
+              <span class="sub-title">Alertas de cobro</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">9.6</span>
+              <span class="sub-title">Filtros por fecha y permisos</span>
+            </li></ul>
+        </details>
+
+        <details class="phase" >
+          <summary>
+            <div class="phase-left">
+              <span class="pill pending">Fase 10 · Pendiente</span>
+              <div>
+                <div class="phase-title">Experiencia móvil, PWA y pulido</div>
+                <div class="phase-obj">que el sistema se sienta como una aplicación nativa, rápida y refinada en cualquier dispositivo.</div>
+              </div>
+            </div>
+            <span class="count">0 / 8</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">10.1</span>
+              <span class="sub-title">Auditoría responsive completa</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">10.2</span>
+              <span class="sub-title">Instalación como aplicación (PWA)</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">10.3</span>
+              <span class="sub-title">Pulido visual y profundidad</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">10.4</span>
+              <span class="sub-title">Rendimiento</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">10.5</span>
+              <span class="sub-title">Skeletons, notificaciones y paginación — auditoría de consistencia</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">10.6</span>
+              <span class="sub-title">Accesibilidad básica</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">10.7</span>
+              <span class="sub-title">Errores y conectividad</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">10.8</span>
+              <span class="sub-title">Revisión de textos y formatos</span>
+            </li></ul>
+        </details>
+
+        <details class="phase" >
+          <summary>
+            <div class="phase-left">
+              <span class="pill pending">Fase 11 · Pendiente</span>
+              <div>
+                <div class="phase-title">Pruebas integrales, despliegue, carga de datos reales y entrega</div>
+                <div class="phase-obj">validar todo el sistema, desplegarlo en Vercel con su entorno de producción, cargar los datos reales y dejarlo listo para operar.</div>
+              </div>
+            </div>
+            <span class="count">0 / 8</span>
+          </summary>
+          <ul class="subs">
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">11.1</span>
+              <span class="sub-title">Pruebas automatizadas de reglas críticas</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">11.2</span>
+              <span class="sub-title">Flujos de extremo a extremo</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">11.3</span>
+              <span class="sub-title">Revisión de seguridad</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">11.4</span>
+              <span class="sub-title">Despliegue en Vercel y variables de producción</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">11.5</span>
+              <span class="sub-title">Carga de datos reales en producción</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">11.6</span>
+              <span class="sub-title">Verificación de persistencia</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">11.7</span>
+              <span class="sub-title">Documentación</span>
+            </li>
+            <li class="sub ">
+              <span class="mark">○</span>
+              <span class="sub-id">11.8</span>
+              <span class="sub-title">Entrega final</span>
+            </li></ul>
+        </details>
+  </main>
+</body>
+</html>
