@@ -13,6 +13,8 @@ Registro vivo de decisiones técnicas, supuestos (`S1`–`S17`) y avance por fas
 | **D3** | Descuentos globales (R9 / R16) | Descuento global flexible y compatible con pagos por línea. | Al guardar un documento con descuento global (% o monto en `$` ref.), se prorratea proporcionalmente sobre las líneas (absorbiendo el residuo de centavo en la última) y se conserva el registro del descuento global. Así la suma de saldos de líneas siempre equivale al saldo de la nota. |
 | **D4** | ORM y PostgreSQL (Neon) | Prisma `7.10.1` + `@prisma/client@7.10.1` + `@prisma/adapter-pg@7.10.1`. | Se fijó `7.10.1` para evitar mezcla con `prisma@8.0.0-rc.x`. Configurado en `prisma7.config.ts` y cliente singleton en `src/lib/prisma.ts`. |
 | **D5** | Despliegue en Vercel al final | Todo el desarrollo (Fases 0–10) corre en local; el despliegue a Vercel pasa a `11.4`. | Se eliminó `0.3 Despliegue de prueba` de Fase 0 (verificando `next build` en local) y se movió el despliegue antes de cargar datos reales en Fase 11. |
+| **D6** | Estilo visual Apple aprobado (`0.3`) | Ancho completo fluido con sidebar flotante (Capa 3), fondo `.ps-canvas`, capas `.ps-inset` y `.ps-layer-1/2/3` con vidrio esmerilado, `.ps-pressable`, Poppins (`tabular-nums`) y sin dark mode. | Definido en `src/app/globals.css` y `src/app/layout.tsx`; no usar contenedores estrechos centrados (`max-w-*`) en vistas principales (solo `max-w-prose` en párrafos largos). Todas las pantallas futuras deben consumir los tokens `.ps-*` y `src/components/ui/` (`0.4`). |
+| **D7** | Navbar móvil superior con menú hamburguesa (`0.6`) | En móvil y tablet se usa barra superior sticky con botón hamburguesa y drawer lateral (`.ps-layer-modal`), en lugar de barra de navegación inferior fija. | Evita colisiones con hojas inferiores de totales (como al armar cotizaciones en B.3) y aprovecha mejor el espacio vertical en pantallas pequeñas. |
 
 ---
 
@@ -42,16 +44,16 @@ Registro vivo de decisiones técnicas, supuestos (`S1`–`S17`) y avance por fas
 
 ## 3. Estado actual de avance
 
-- **Fase actual:** Pre-Fase 0 (preparación inicial).
+- **Fase actual:** Fase 0 completada (`0.1`–`0.8`); siguiente: **Fase 1 — Autenticación, usuarios y roles (`1.1`)**.
 - **Avance verificado:**
-  - Proyecto Next.js (`16.4.6`), TypeScript y Tailwind v4 base en funcionamiento.
-  - Prisma `7.10.1` configurado (`prisma7.config.ts`, `prisma/schema.prisma`, `src/lib/prisma.ts`) y conectado contra PostgreSQL `18.7` en Neon (BD actualmente vacía).
-- **Insumos pendientes del cliente para fases futuras:**
-  - Logo oficial en PNG (ya disponible en `public/logo.png` y `public/Logoredondo.png` para Fase 0.6 y Fase 8).
-  - Archivo `Lista_de_Precios_Agosto_2026.xlsx` (para Fase 3.6–3.8).
-  - Archivo Excel de clientes (para Fase 4.6).
+  - Proyecto Next.js (`16.4.6`), TypeScript y Tailwind v4 base arrancan (`next dev`) y compilan (`next build`) sin errores.
+  - Prisma `7.10.1` configurado (`prisma7.config.ts`, `prisma/schema.prisma`, `src/lib/prisma.ts`) y conectado contra PostgreSQL `18.7` en Neon; prueba de lectura/escritura/limpieza verificada (`leftover: null`).
+- **Insumos del cliente disponibles en el repositorio:**
+  - Logos en `public/logo.png` y `public/Logoredondo.png`.
+  - Catálogo en `docs/Lista_de_Precios_Agosto_2026.xlsx`.
+  - Clientes en `docs/Directorio_Clientes.xlsx`.
 - **Progreso de fases:**
-  - [ ] Fase 0 — Fundamentos y sistema de diseño (`0.1`–`0.8`)
+  - [x] Fase 0 — Fundamentos y sistema de diseño (`0.1`–`0.8`)
   - [ ] Fase 1 — Autenticación, usuarios y roles (`1.1`–`1.8`)
   - [ ] Fase 2 — Tasa BCV (`2.1`–`2.7`)
   - [ ] Fase 3 — Catálogo de productos (`3.1`–`3.9`)

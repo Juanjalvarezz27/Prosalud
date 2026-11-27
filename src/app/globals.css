@@ -1,26 +1,146 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colores exactos de marca (fondos suaves, acentos e ilustración) */
+  --ps-green-brand: #80b038;
+  --ps-teal-brand: #30a8b8;
+
+  /* Tonos accesibles (WCAG AA sobre blanco y para texto blanco) */
+  --ps-green-700: #4a7312;
+  --ps-green-800: #39590c;
+  --ps-green-soft: #eef6e2;
+  --ps-green-border: #cfe3b0;
+
+  --ps-teal-700: #146e7b;
+  --ps-teal-800: #0e545e;
+  --ps-teal-soft: #e5f5f7;
+  --ps-teal-border: #b6e1e8;
+
+  /* Estados semánticos */
+  --ps-warn-bg: #fef4e2;
+  --ps-warn-text: #8f4e00;
+  --ps-warn-border: #f7d79e;
+
+  --ps-danger-bg: #fdecec;
+  --ps-danger-text: #a12626;
+  --ps-danger-border: #f5c2c2;
+
+  --ps-muted-bg: #edf1f3;
+  --ps-muted-text: #4e5d66;
+  --ps-muted-border: #d7e0e5;
+
+  /* Neutrales y capas de profundidad estilo Apple */
+  --ps-bg: #eef3f5;
+  --ps-inset: #e6ecef;
+  --ps-surface: #ffffff;
+  --ps-surface-subtle: #f8fbfc;
+  --ps-border: rgba(18, 33, 40, 0.08);
+  --ps-text: #111d24;
+  --ps-text-secondary: #586b75;
+
+  /* Sombras multicapa difusas y reflejo especular superior */
+  --ps-shadow-inset: inset 0 1px 2px rgba(15, 29, 36, 0.07), inset 0 0 0 1px rgba(15, 29, 36, 0.04);
+  --ps-shadow-1: 0 1px 2px rgba(15, 29, 36, 0.04), 0 8px 24px -6px rgba(15, 29, 36, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --ps-shadow-2: 0 2px 6px rgba(15, 29, 36, 0.05), 0 18px 40px -10px rgba(15, 29, 36, 0.13), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --ps-shadow-3: 0 8px 20px rgba(15, 29, 36, 0.08), 0 26px 56px -12px rgba(15, 29, 36, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+  /* Radios suaves */
+  --ps-radius-sm: 0.75rem;
+  --ps-radius-md: 1rem;
+  --ps-radius-lg: 1.375rem;
+  --ps-radius-xl: 1.75rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --color-background: var(--ps-bg);
+  --color-foreground: var(--ps-text);
+  --color-brand-green: var(--ps-green-brand);
+  --color-brand-green-dark: var(--ps-green-700);
+  --color-brand-teal: var(--ps-teal-brand);
+  --color-brand-teal-dark: var(--ps-teal-700);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Capa 0: Lienzo ambiental sutil para dar contexto a las superficies translúcidas */
+.ps-canvas {
+  background-color: var(--ps-bg);
+  background-image:
+    radial-gradient(64rem 42rem at 8% -5%, rgba(48, 168, 184, 0.11), transparent 60%),
+    radial-gradient(56rem 38rem at 95% 8%, rgba(128, 176, 56, 0.10), transparent 58%),
+    radial-gradient(48rem 34rem at 55% 105%, rgba(48, 168, 184, 0.06), transparent 60%);
+}
+
+/* Superficie hundida para rieles, buscadores y contenedores internos */
+.ps-inset {
+  background-color: var(--ps-inset);
+  box-shadow: var(--ps-shadow-inset);
+}
+
+/* Capa 1: Superficie limpia */
+.ps-layer-1 {
+  background-color: var(--ps-surface);
+  border: 1px solid var(--ps-border);
+  box-shadow: var(--ps-shadow-1);
+}
+
+/* Capa 2: Superficie elevada con ligera gradación */
+.ps-layer-2 {
+  background: linear-gradient(180deg, #ffffff 0%, #fafcfd 100%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  outline: 1px solid rgba(18, 33, 40, 0.06);
+  box-shadow: var(--ps-shadow-2);
+}
+
+/* Capa 3: Vidrio flotante translúcido estilo Apple */
+.ps-layer-3 {
+  background-color: rgba(255, 255, 255, 0.88);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  outline: 1px solid rgba(18, 33, 40, 0.06);
+  box-shadow: var(--ps-shadow-3);
+}
+
+/* Capa 3 para modales, cajones y hojas: alta opacidad para máxima legibilidad */
+.ps-layer-modal {
+  background-color: rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  outline: 1px solid rgba(18, 33, 40, 0.08);
+  box-shadow: var(--ps-shadow-3);
+}
+
+/* Respuesta táctil sutil al interactuar */
+.ps-pressable {
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.ps-pressable:hover {
+  transform: translateY(-1px);
+}
+
+.ps-pressable:active {
+  transform: scale(0.98);
+}
+
+/* Alineación tabular para montos en $ y Bs. */
+.ps-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Animación sutil para skeletons (sin spinners) */
+@keyframes ps-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.ps-skeleton {
+  background: linear-gradient(90deg, #e5ecef 25%, #f5f9fa 50%, #e5ecef 75%);
+  background-size: 200% 100%;
+  animation: ps-shimmer 1.6s ease-in-out infinite;
 }
